@@ -1,0 +1,190 @@
+/* Reset default styles */
+body, h1, h2, p, a, button, input {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+.header {
+    background-color: #6a0572;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+.logo img {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+}
+
+/* Navigation styles */
+.nav {
+    background-color: #ffffff;
+    padding: 10px;
+    text-align: center;
+}
+.nav a {
+    color: #6a0572;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+/* Main content styles */
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 47px;
+}
+.illustration {
+    max-width: 800px;
+    height: 400px;
+}
+
+/* Button styles */
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.buttons button {
+    background-color: #6a0572;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+/* Button styles da pagina cadastrar prestador*/
+.buttonsCadastramento {
+    display: flex;
+    justify-content: center;
+    margin-top: 220px;
+    margin-bottom: 190px; /* Adicionando margem na parte inferior dos botões */
+}
+.buttonsCadastramento button {
+    background-color: #6a0572;
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Ajuste o preenchimento interno do botão */
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 18px; /* Ajuste o tamanho da fonte */
+    width: 200px; /* Ajuste a largura do botão */
+    height: 60px; /* Ajuste a altura do botão */
+}
+
+/* Footer styles da pagina cadastrar prestador */
+.footerCadastramento {
+    background-color: #6a0572;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 269px; /* Ajustando a margem superior do footer */
+}
+.footerCadastramento a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+
+/* Footer styles  da pagina atualizar prestador*/
+.footerAtualizar {
+    background-color: #6a0572;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 119px; /* Ajustando a margem superior do footer */
+}
+.footerAtualizar a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Footer styles  da pagina deletar prestador*/
+.footerDel {
+    background-color: #6a0572;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 296px; /* Ajustando a margem superior do footer */
+}
+.footerDel a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Footer styles */
+.footer {
+    background-color: #6a0572;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+.footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+
+/* Formulário */
+.form-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    margin-top: 20px;
+    background-color: #ffffff;
+}
+.form-content input[type="id"],
+.form-content input[type="text"],
+.form-content input[type="email"],
+.form-content input[type="senha"],
+.form-content input[type="tel"],
+.form-content input[type="cnpj"],
+.form-content input[type="horarioDisponibilidade"],
+.form-content input[type="titulo"],
+.form-content input[type="descricao"],
+.form-content input[type="preco"],
+.form-content input[type="servico"],
+.form-content input[type="latitude"],
+.form-content input[type="longitude"] {
+    width: 300px; /* Defina a largura desejada para os campos */
+    padding: 10px; /* Ajuste o preenchimento interno dos campos */
+    margin: 10px 0; /* Ajuste a margem entre os campos */
+}
+
+.form-content button {
+    background-color: #6a0572;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px auto;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}

@@ -1,7 +1,6 @@
 import { prismaClient } from "../../prismaClient";
 import express, { Request, Response } from 'express';
 import { compare, hash } from 'bcrypt';
-import { sign } from "crypto";
 import jwt from 'jsonwebtoken';
 
 
@@ -116,9 +115,9 @@ export async function atualizarPerfilPrestador(req: Request, res: Response) {
                 horarioDisponibilidade
             }
         })
-        return res.status(201).json("Prestador atualizado com sucesso ")
+        return res.status(200).json({ message: 'Prestador de serviço atualizado com sucesso' })
     } catch (error) {
-        return res.status(404).json({ error: "Erro a atualizar prestador" })
+        return res.status(500).json({ error: "Erro a atualizar prestador" })
     }
 }
 
