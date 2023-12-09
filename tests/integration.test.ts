@@ -3,6 +3,7 @@ import { criarPrestador, atualizarPerfilPrestador } from "../controller/prestado
 import { PrismaClient } from "@prisma/client";
 import { compare, hash } from "bcrypt";
 import { criarAnuncio } from "../controller/anuncioController/anuncioController";
+import { criarCliente } from "../controller/clienteController/clienteController";
 
 
 
@@ -229,4 +230,49 @@ test('Deve ser possível criar um anúncio no banco de dados', async () => {
             id: idAnuncioCriado,
         },
     });
+});
+
+test('Deve ser possível criar um cliente no banco de dados', async () => {
+    const senha = 'senha456';
+    const mockReq = {
+        body: {
+            nome: 'Verissimo Terceiro',
+            email: 'terceiro.chuu@gmail.com',
+            senha,
+            telefone: '(83) 4002-8922',
+            cpf: '999.999.999-99',
+            endereco: 'Avenida Brasil, nº 5',
+        },
+    } as Request;
+
+    const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+    } as unknown as Response;
+
+    await criarCliente(mockReq, mockRes);
+
+    const usuarioCriado = await prisma.usuario.findUnique({
+        where: {
+            email: 'terceiro.chuu@gmail.com',
+        },
+    });
+
+    const clienteCriado = await prisma.cliente.findUnique({
+        where: {
+            cpf: '999.999.999-99',
+        },
+    });
+
+    if (!clienteCriado || !usuarioCriado) {
+        throw new Error("Cliente não encontrado");
+    }
+    const senhaCorrespondente = await compare(senha, usuarioCriado.senha);
+
+    expect(senhaCorrespondente).toBe(true);
+    expect(usuarioCriado.nome).toBe('Verissimo Terceiro');
+    expect(usuarioCriado.email).toBe('terceiro.chuu@gmail.com');
+    expect(usuarioCriado.telefone).toBe('(83) 4002-8922');
+    expect(clienteCriado.cpf).toBe('999.999.999-99');
+    expect(clienteCriado.endereco).toBe('Avenida Brasil, nº 5');
 });
