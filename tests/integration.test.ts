@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { criarPrestador, atualizarPerfilPrestador } from "../controller/prestadorController/prestadorController";
 import { PrismaClient } from "@prisma/client";
 import { compare, hash } from "bcrypt";
+import { criarAnuncio } from "../controller/anuncioController/anuncioController";
 
 
 
@@ -20,6 +21,7 @@ beforeEach(async () => {
 afterAll(async () => {
     await prisma.$disconnect();
 });
+
 
 
 
@@ -144,136 +146,87 @@ test('Deve ser possível atualizar um prestador de serviço no banco de dados', 
     expect(prestadorAtualizado?.horarioDisponibilidade).toBe('09h às 17h');
 });
 
+test('Deve ser possível criar um anúncio no banco de dados', async () => {
+    const mockReqCriar = {
+        body: {
+            nome: "Joaquim de Oliveira",
+            email: "joaquim.oliveira@example.com",
+            senha: "senha123",
+            telefone: "(11) 9876-5432",
+            cnpj: "98.685.432/1098-76",
+            horarioDisponibilidade: "09h às 17h",
+        },
+    } as Request;
 
-// test('Deve ser possível criar um prestador de serviço(teste integração)', async () => {
-//     const senhaOriginal = "senha456";
-//     const senhaCriptografada = await hash(senhaOriginal, 5);
+    const mockResCriar = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+    } as unknown as Response;
 
-//     const mockReq = {
-//         body: {
-//             nome: "Carlos Santos",
-//             email: "carlos.santos@example.com",
-//             senha: senhaOriginal,
-//             telefone: "(33) 1234-5678",
-//             cnpj: "11.223.334/5566-77",
-//             horarioDisponibilidade: "10h às 20h",
-//         },
-//     } as Request;
+    await criarPrestador(mockReqCriar, mockResCriar);
 
-//     const mockRes = {
-//         status: jest.fn().mockReturnThis(),
-//         json: jest.fn(),
-//     } as unknown as Response;
+    const prestadorCriado = await prisma.prestadorServico.findUnique({
+        where: {
+            cnpj: "98.685.432/1098-76",
+        },
+    });
 
-//     await criarPrestador(mockReq, mockRes);
+    const usuarioCriado = await prisma.usuario.findUnique({
+        where: {
+            email: "joaquim.oliveira@example.com",
+        },
+    });
 
-//     await new Promise((resolve) => setTimeout(resolve, 500));
+    expect(prestadorCriado).toBeTruthy();
+    const mockreqAnuncio = {
+        autenticado: usuarioCriado?.id, // Simulando um ID autenticado do prestador
+        body: {
+            titulo: "Eletricidade",
+            descricao: "Energia",
+            preco: "R$ 100,00",
+            servico: "Eletricista",
+            latitude: "21456314123",
+            longitude: "6512365121",
+        },
+    } as Request;
 
-//     const prestadorCriado = await prisma.usuario.findUnique({
-//         where: {
-//             email: "carlos.santos@example.com",
-//         },
-//     });
+    const mockResAnuncio = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+    } as unknown as Response;
 
-//     if (!prestadorCriado) {
-//         throw new Error("Prestador não encontrado");
-//     }
+    // Chamar a função para criar o anúncio
+    await criarAnuncio(mockreqAnuncio, mockResAnuncio);
+    expect(mockResAnuncio.status).toHaveBeenCalledWith(200);
 
-//     const senhaCorrespondente = await compare(senhaOriginal, prestadorCriado.senha);
+    const anuncioCriado = await prisma.anuncio.findFirst({
+        where: {
+            titulo: "Eletricidade",
+            prestadorId: usuarioCriado?.id,
+        },
+    });
 
-//     if (!senhaCorrespondente) {
-//         throw new Error("Senha não corresponde");
-//     }
+    const anuncioEsperado={
+        id: anuncioCriado?.id,
+        titulo: anuncioCriado?.titulo,
+        descricao: anuncioCriado?.descricao,
+        preco: anuncioCriado?.preco,
+        servico: anuncioCriado?.servico,
+        latitude:  anuncioCriado?.latitude,
+        longitude: anuncioCriado?.longitude,
+        dtCriacao: anuncioCriado?.dtCriacao,
+        dtAtualizacao: anuncioCriado?.dtAtualizacao,
+        prestadorId: anuncioCriado?.prestadorId   }
 
-//     const prestadorEsperado = {
-//         nome: "Carlos Santos",
-//         email: "carlos.santos@example.com",
-//         senha: senhaCriptografada, // Use a senha criptografada aqui
-//         telefone: "(33) 1234-5678",
-//         cnpj: "11.223.334/5566-77",
-//         horarioDisponibilidade: "10h às 20h",
-//     };
+    expect(anuncioCriado).toEqual(anuncioEsperado);
 
-//     expect(prestadorCriado).toMatchObject(prestadorEsperado);
-// });
+    const idAnuncioCriado= anuncioCriado?.id
+    console.log(idAnuncioCriado);
+    
 
-
-// test('Deve ser possível criar um prestador de serviço(teste integração)', async () => {
-//     const senha= "senha456";
-//     const senhaCriptografada = await hash(senha, 5);
-
-//     const mockReq = {
-//         body: {
-//             nome: "Carlos Santos",
-//             email: "carlos.santos@example.com",
-//             senha: "senha456",
-//             telefone: "(33) 1234-5678",
-//             cnpj: "11.223.334/5566-77",
-//             horarioDisponibilidade: "10h às 20h",
-//         },
-//     } as Request;
-
-//     const mockRes = {
-//         status: jest.fn().mockReturnThis(),
-//         json: jest.fn(),
-//     } as unknown as Response;
-
-//     await criarPrestador(mockReq, mockRes);
-
-//     // Espera um curto período (500ms) para a criação ser concluída no banco de dados
-//     await new Promise((resolve) => setTimeout(resolve, 500));
-
-//     const prestadorEsperado = {
-//         nome: "Carlos Santos",
-//         email: "carlos.santos@example.com",
-//         senha: senhaCriptografada,
-//         telefone: "(33) 1234-5678",
-//         cnpj: "11.223.334/5566-77",
-//         horarioDisponibilidade: "10h às 20h",
-//     };
-
-//     const prestadorCriado = await prisma.usuario.findUnique({
-//         where: {
-//             email: "carlos.santos@example.com",
-//         },
-//     });
-
-//     expect(prestadorCriado).toMatchObject(prestadorEsperado);
-// });
-
-
-// test('Deve ser possível criar um prestador de serviço(teste integração)', async () => {
-//     const mockReq = {
-//         body: {
-//             nome: 'Carlinha',
-//             email: 'carlitaa@gmail.com',
-//             telefone: '(11) 9876-5432',
-//             cnpj: '98.765.437/1098-76',
-//             horarioDisponibilidade: '09h às 17h',
-//         },
-//     } as Request;
-
-//     const mockRes = {
-//         status: jest.fn().mockReturnThis(),
-//         json: jest.fn(),
-//     } as unknown as Response;
-
-//     await criarPrestador(mockReq, mockRes);
-
-//     const prestadorEsperado = {
-//         nome: 'Carlinha',
-//         email: 'carlitaa@gmail.com',
-//         telefone: '(11) 9876-5432',
-//         cnpj: '98.765.437/1098-76',
-//         horarioDisponibilidade: '09h às 17h',
-//     };
-
-//     const prestadorCriado = await prisma.usuario.findUnique({
-//         where: {
-//             email: 'carlitaa@gmail.com',
-
-//         },
-//     });
-
-//     expect(prestadorCriado).toMatchObject(prestadorEsperado);
-// });
+    await prisma.anuncio.deleteMany({
+        where: {
+            id: idAnuncioCriado,
+        },
+    });
+});
