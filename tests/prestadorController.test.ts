@@ -84,7 +84,7 @@ describe('Teste de prestador', () => {
       await fazerLogin(mockReq, mockRes);
 
       // Verifica se o status retornado é 201
-      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.status).toHaveBeenCalledWith(200);
       // Verifica se o token foi retornado no JSON
       expect(mockRes.json).toHaveBeenCalledWith('token_simulado');
     });
@@ -151,7 +151,7 @@ describe('Teste de prestador', () => {
         },
       });
 
-      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.status).toHaveBeenCalledWith(200);
       expect(mockRes.json).toHaveBeenCalledWith({ message: 'Prestador deletado com sucesso!' });
     });
   });
@@ -209,7 +209,7 @@ describe('Teste de prestador', () => {
     
       await atualizarPerfilPrestador(mockReq, mockRes);
     
-      expect(mockRes.status).toHaveBeenCalledWith(401); // Ou 403, dependendo do erro de autenticação que você está usando
+      expect(mockRes.status).toHaveBeenCalledWith(401); 
       expect(mockRes.json).toHaveBeenCalledWith({ error: 'Usuário não autenticado' });
     });
 

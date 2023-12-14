@@ -94,7 +94,6 @@ export async function atulizarPerfilCliente(req: Request, res: Response) {
             data: {
                 nome,
                 telefone,
-                foto
             }
         })
         const atualizaCliente = await prismaClient.cliente.update({
@@ -106,7 +105,7 @@ export async function atulizarPerfilCliente(req: Request, res: Response) {
                 endereco
             }
         })
-        return res.status(201).json("Cliente atualizado com sucesso")
+        return res.status(200).json("Cliente atualizado com sucesso")
     } catch (error) {
         return res.status(404).json({ error: "Erro ao atualizar cliente" })
     }
@@ -130,7 +129,7 @@ export async function atualizarSegurancaCliente(req: Request, res: Response) {
                 senha: senhaCriptografada
             }
         })
-        return res.status(201).json("Cliente atualizado com sucesso")
+        return res.status(200).json("Cliente atualizado com sucesso")
     } catch (error) {
         return res.status(404).json({ error: "Erro ao atualizar cliente" })
     }
@@ -149,7 +148,6 @@ export async function listarClientes(req: Request, res: Response) {
                 nome: true,
                 email: true,
                 telefone: true,
-                foto: true,
                 cliente: {
                     select: {
                         cpf: true,

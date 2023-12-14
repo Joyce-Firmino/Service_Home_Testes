@@ -15,11 +15,18 @@ beforeAll(async () => {
 
 beforeEach(async () => {
     // Limpar os dados relevantes do banco de dados antes de cada teste
+    await prisma.anuncio.deleteMany({})
+    await prisma.cliente.deleteMany({})
     await prisma.prestadorServico.deleteMany({});
     await prisma.usuario.deleteMany({});
+
 });
 
 afterAll(async () => {
+    await prisma.anuncio.deleteMany({})
+    await prisma.cliente.deleteMany({})
+    await prisma.prestadorServico.deleteMany({});
+    await prisma.usuario.deleteMany({});
     await prisma.$disconnect();
 });
 
@@ -223,13 +230,6 @@ test('Deve ser possível criar um anúncio no banco de dados', async () => {
 
     const idAnuncioCriado= anuncioCriado?.id
     console.log(idAnuncioCriado);
-    
-
-    await prisma.anuncio.deleteMany({
-        where: {
-            id: idAnuncioCriado,
-        },
-    });
 });
 
 test('Deve ser possível criar um cliente no banco de dados', async () => {

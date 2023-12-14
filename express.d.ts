@@ -4,7 +4,6 @@ type PrestadorServico = {
   email: string;
   senha: string;
   telefone: string;
-  foto: string?
 }
 
 declare namespace Express{

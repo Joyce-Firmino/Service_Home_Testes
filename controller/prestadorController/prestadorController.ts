@@ -78,7 +78,7 @@ export async function fazerLogin(req: Request, res: Response) {
                 { expiresIn: '1d', subject: prestadorId }
             );
 
-            return res.status(201).json(token)
+            return res.status(200).json(token)
         }
     } catch (error) {
         return res.status(404).json({ error: "Erro ao fazer login do prestador" })
@@ -141,7 +141,7 @@ export async function atualizarSegurancaPrestador(req: Request, res: Response) {
                 senha: senhaCriptografada
             }
         })
-        return res.status(201).json("Prestador atualizado com sucesso ")
+        return res.status(200).json("Prestador atualizado com sucesso ")
     } catch (error) {
         return res.status(404).json({ error: "Erro a atualizar prestador" })
     }
@@ -252,7 +252,7 @@ export async function deletarPrestador(req: Request, res: Response) {
                     },
                 });
 
-                return res.status(201).json({ message: 'Prestador deletado com sucesso!' });
+                return res.status(200).json({ message: 'Prestador deletado com sucesso!' });
             } catch (error) {
                 // Caso haja falha ao deletar o usuário após excluir o prestador
                 return res.status(500).json({ error: 'Erro ao deletar o usuário', details: error });

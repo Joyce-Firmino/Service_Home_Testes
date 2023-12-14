@@ -74,7 +74,7 @@ describe('Teste de cliente', () => {
   
       await atulizarPerfilCliente(mockReq, mockRes);
   
-      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.status).toHaveBeenCalledWith(200);
       expect(mockRes.json).toHaveBeenCalledWith('Cliente atualizado com sucesso');
     });
 
@@ -96,7 +96,7 @@ describe('Teste de cliente', () => {
   
       await atualizarSegurancaCliente(mockReq, mockRes);
   
-      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.status).toHaveBeenCalledWith(200);
       expect(mockRes.json).toHaveBeenCalledWith('Cliente atualizado com sucesso');
     });
 
