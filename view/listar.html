@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../reportIcon.png" type="image/x-icon">
-    <title>Deletar Denúncia</title>
+    <title>Visualizar Denúncias</title>
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -21,15 +21,22 @@
         </ul>
     </nav>
     <div id="form-container">
-        <h1 id="listarOcoh1">Deletar Denúncia</h1>
-        <div id="inputs">
-       <label for="idDel">Id da Denúncia:</label>
-       <input type="text" id="idDel" name="idDel" placeholder="Digite o id da denuncia">
-
-    </div>
-        
+        <h1 id="listarOcoh1">Lista de Denúncias</h1>
+        <table id="tabela">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Título</th>
+                    <th>Tipo</th>
+                    <th>Data e Hora</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aqui serão inseridas as linhas da tabela -->
+            </tbody>
+        </table>
         <div id="botoes">
-            <button onclick="deletar()" type="submit" id="botao">Deletar</button>
+            <button onclick="listandoTabela()" type="submit" id="botao" >Listar</button>
         </div>
     </div>
     <script src="../controller/front.js"></script>

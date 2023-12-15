@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../reportIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <title>Atualizar Denúncia</title>
+    <title>Adicionar Denúncia</title>
     
 </head>
 
@@ -21,7 +21,7 @@
         </ul>
     </nav>
     <div id="form-container">
-        <h2 id="title">Atualizar Denúncia</h2>
+        <h2 id="title">Adicionar Denúncia</h2>
         <form id="address-form">
             <div id="map"></div>
 
@@ -37,17 +37,12 @@
                <label for="dataHora">Data e Hora:</label>
                <input type="datetime-local" id="dataHora" name="data-hora">
 
-               <label for="idDel">Id da Denúncia:</label>
-               <input type="text" id="idDel" name="idDel" required placeholder="Digite id da denuncia">
-
             </div>
 
 
             <!-- Botão de envio do formulário -->
             <div id="botoes">
-                <button onclick="atualizar()" type="submit" id="botao">Atualizar</button>
-                <button onclick="deletar()" type="submit" id="botao">Deletar</button>
-
+                <button onclick= "salvar()" type="submit" id="botao">Enviar</button>
             </div>
         </form>
     </div>
